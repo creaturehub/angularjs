@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en-us" ng-app="itemServiceApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Item Service</title>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-controller="MainCtrl as mainCtrl">
+
+    <h1>Hello Controllers!</h1>
+    <button ng-click="mainCtrl.open('first')">Open First</button>
+    <button ng-click="mainCtrl.open('second')">Open Second</button>
+
+    <div ng-switch on="mainCtrl.tab">
+
+      <div ng-switch-when="first">
+        <div ng-controller="SubCtrl as ctrl">
+          <h3>First tab</h3>
+          <ul>
+            <li ng-repeat="item in ctrl.list()">
+              <span ng-bind="item.label"></span>
+            </li>
+          </ul>
+
+          <button ng-click="ctrl.add()">Add More Items</button>
+        </div>
+      </div>
+
+      <div ng-switch-when="second">
+        <div ng-controller="SubCtrl as ctrl">
+          <h3>Second tab</h3>
+          <ul>
+            <li ng-repeat="item in ctrl.list()">
+              <span ng-bind="item.label"></span>
+            </li>
+          </ul>
+
+          <button ng-click="ctrl.add()">Add More Items</button>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="../angular.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

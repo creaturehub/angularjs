@@ -30,9 +30,8 @@ func main() {
 }
 
 func bookHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	if r.Method == "GET" {
+		w.Header().Set("Content-Type", "application/json")
 		jsonBooks := make([]string, len(books))
 		for i, book := range books {
 			b, _ := json.Marshal(book)
@@ -40,6 +39,11 @@ func bookHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprintf(w, "["+strings.Join(jsonBooks, ",")+"]")
 	} else if r.Method == "POST" {
-		// do something here
+		r.ParseForm()
+		newBook := Book{
+			Name:   r.FormValue("name"),
+			Author: r.FormValue("author"),
+		}
+		books = append(books, newBook)
 	}
 }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
-<html lang="en-us" ng-app="httpGetExampleApp">
+<html lang="en-us" ng-app="httpPostExampleApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Http Get Example</title>
+    <title>Http Post Example</title>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -15,6 +15,20 @@
   </head>
   <body ng-controller="MainCtrl as mainCtrl">
     
+    <form name="addForm" ng-submit="mainCtrl.add()">
+      <input type="text"
+             placeholder="Name"
+             ng-model="mainCtrl.newBook.name"
+             required> 
+      <input type="text"
+             placeholder="Author"
+             ng-model="mainCtrl.newBook.author"
+             required> 
+      <input type="submit"
+             value="Add"
+             ng-disabled="addForm.$invalid"> 
+    </form>
+
     <ul ng-repeat="book in mainCtrl.books">
       <li>
         <h1 ng-bind="book.name"></h1>

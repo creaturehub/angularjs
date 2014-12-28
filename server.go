@@ -8,7 +8,8 @@ import (
 )
 
 type Book struct {
-	Name, Author string
+	Name   string `json:"name"`
+	Author string `json:"author"`
 }
 
 var books = []Book{

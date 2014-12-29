@@ -31,8 +31,8 @@ func main() {
 func bookHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		w.Header().Set("Content-Type", "application/json")
-		b, _ := json.Marshal(books)
-		fmt.Fprintf(w, string(b))
+		enc := json.NewEncoder(w)
+		enc.Encode(books)
 	} else if r.Method == "POST" {
 		r.ParseForm()
 		newBook := Book{

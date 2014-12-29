@@ -22,25 +22,4 @@ angular
           self.newBook = {};
         });
     };
-  }])
-  .config(['$httpProvider', function($httpProvider) {
-    // Every POST data becomes jQuery styles
-    $httpProvider.defaults.transformRequest.push(function(data) {
-      var requestStr;
-      if (data) {
-        data = JSON.parse(data);
-        for (var key in data) {
-          if (requestStr) {
-            requestStr += '&' + key + '=' + data[key];
-          } else {
-            requestStr = key + '=' + data[key];
-          }
-        }
-      }
-      return requestStr;
-    });
-
-    // Set the content type to be FORM type for all post requests
-    // This does not add it for GET requests.
-    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   }]);

@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -34,11 +35,9 @@ func bookHandler(w http.ResponseWriter, r *http.Request) {
 		enc := json.NewEncoder(w)
 		enc.Encode(books)
 	} else if r.Method == "POST" {
-		r.ParseForm()
-		newBook := Book{
-			Name:   r.FormValue("name"),
-			Author: r.FormValue("author"),
-		}
+		var newBook Book
+		body, _ := ioutil.ReadAll(r.Body)
+		json.Unmarshal(body, &newBook)
 		books = append(books, newBook)
 	}
 }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en-us" ng-app="filtersApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Filters</title>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-controller="FilterCtrl as ctrl">
+
+    <p>Amount as a number: {{ctrl.amount | number}}</p>
+    <p>Total Cost as a current: {{ctrl.totalCost | currency}}</p>
+    <p>Total Cost in INR: {{ctrl.totalCost | currency:'INR'}}</p>
+    <p>Shouting the name: {{ctrl.name | uppercase}}</p>
+    <p>Whispering the name: {{ctrl.name | lowercase}}</p>
+    <p>Start Time: {{ctrl.startTime | date:'medium'}}</p>
+
+    <ul>
+      <li>Amount</li>
+      <ul>
+        <li>Amount with no filters: {{ctrl.amount}}</li>
+        <!-- Using the English pound sign -->
+        <li>Default Currency: {{ctrl.amount | currency:'&#163 '}}</li>
+        <li>Number: {{ctrl.amount | number}}</li>
+        <li>No. with 4 decimals: {{ctrl.amount | number:4}}</li>
+      </ul>
+
+      <li>Name</li>
+      <ul>
+        <li>Name with no filters: {{ctrl.name}}</li>
+        <li>Lowercase: {{ctrl.name | lowercase}}</li>
+        <li>Uppercase: {{ctrl.name | uppercase}}</li>
+        <li>Limit: {{ctrl.name | limitTo:5}}</li>
+      </ul>
+
+      <li>TimeStamp</li>
+      <ul>
+        <li>Default Date: {{ctrl.startTime | date}}</li>
+        <li>Medium Date: {{ctrl.startTime | date:'medium'}}</li>
+      </ul>
+
+      <li>JSON Filter: {{ctrl.obj | json}}</li>
+    </ul>
+
+    <button ng-click="ctrl.currentFilter = 'string'">Filter with String</button>
+    <button ng-click="ctrl.currentFilter = 'object'">Filter with Object</button>
+    <button ng-click="ctrl.currentFilter = 'function'">Filter with Function</button>
+    <label>
+      Filter Text
+      <input type="text" ng-model="ctrl.filterOptions['string']">
+    </label>
+    <label>
+      Show Done Only
+      <input type="checkbox" ng-model="ctrl.filterOptions['object'].done">
+    </label>
+
+    <ul ng-repeat="note in ctrl.notes |
+                   filter:ctrl.filterOptions[ctrl.currentFilter] |
+                   orderBy:ctrl.sortOrder |
+                   limitTo:5">
+      <li>{{note.label}} - {{note.type}} - {{note.done}}</li>
+    </ul>
+
+    <h3>Custom Filter Time Ago</h3>
+    <ul>
+      <li>Start Time (Timestamp): {{ctrl.startTime}}</li>
+      <li>Start Time (DateTime): {{ctrl.startTime | date:'medium'}}</li>
+      <li>Start Time (Custom Filter Time Ago): {{ctrl.startTime | timeAgo}}</li>
+      <li>someTimeAgo: {{ctrl.someTimeAgo | date:'short'}}</li>
+      <li>someTimeAgo (Custom Filter Time Ago): {{ctrl.someTimeAgo | timeAgo}}</li>
+    </ul>
+    
+    <script src="../angular.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

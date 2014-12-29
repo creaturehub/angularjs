@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 )
 
 type Book struct {
@@ -32,12 +31,8 @@ func main() {
 func bookHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		w.Header().Set("Content-Type", "application/json")
-		jsonBooks := make([]string, len(books))
-		for i, book := range books {
-			b, _ := json.Marshal(book)
-			jsonBooks[i] = string(b)
-		}
-		fmt.Fprintf(w, "["+strings.Join(jsonBooks, ",")+"]")
+		b, _ := json.Marshal(books)
+		fmt.Fprintf(w, string(b))
 	} else if r.Method == "POST" {
 		r.ParseForm()
 		newBook := Book{
